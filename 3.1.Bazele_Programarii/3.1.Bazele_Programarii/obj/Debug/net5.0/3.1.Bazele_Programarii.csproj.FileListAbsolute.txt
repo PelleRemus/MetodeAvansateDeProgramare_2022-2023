@@ -1,0 +1,16 @@
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\3.1.Bazele_Programarii.exe
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\3.1.Bazele_Programarii.deps.json
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\3.1.Bazele_Programarii.runtimeconfig.json
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\3.1.Bazele_Programarii.runtimeconfig.dev.json
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\3.1.Bazele_Programarii.dll
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\ref\3.1.Bazele_Programarii.dll
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\bin\Debug\net5.0\3.1.Bazele_Programarii.pdb
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.csproj.AssemblyReference.cache
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.AssemblyInfoInputs.cache
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.AssemblyInfo.cs
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.csproj.CoreCompileInputs.cache
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.dll
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\ref\3.1.Bazele_Programarii.dll
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.pdb
+C:\Users\remus\Documents\GitHub\MetodeAvansateDeProgramare_2022-2023\3.1.Bazele_Programarii\3.1.Bazele_Programarii\obj\Debug\net5.0\3.1.Bazele_Programarii.genruntimeconfig.cache

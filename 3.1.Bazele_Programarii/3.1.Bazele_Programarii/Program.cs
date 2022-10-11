@@ -1,0 +1,102 @@
+﻿using System;
+
+namespace _3._1.Bazele_Programarii
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.Write("Infroduceti un numar n: ");
+            int n = int.Parse(Console.ReadLine());
+            int oglindit = 0;
+
+            // eliminarea cifrelor pare din n
+            int x = n; // folosim o variabila auxiliara pentru a nu modifica valoarea lui n
+            while (x > 0)
+            {
+                int c = x % 10;
+                x = x / 10;
+                if (c % 2 != 0) // daca n este impar, il adaugam la oglindit, deci sarim peste cifrele pare
+                    oglindit = oglindit * 10 + c;
+            }
+
+            while(oglindit > 0)
+            {
+                int c = oglindit % 10;
+                oglindit = oglindit / 10;
+                x = x * 10 + c;
+            }
+
+            Console.WriteLine($"Numarul {n} fara cifre pare este: {x}");
+
+            // Adăugați media aritmetică a cifrelor consecutive din n între acestea
+            // ex.: 1483 -> 1246853
+            x = n;
+            while (x > 9)
+            {
+                int c = x % 10;
+                x = x / 10;
+                int c2 = x % 10; // penultima cifra a lui n
+
+                oglindit = oglindit * 10 + c;
+                oglindit = oglindit * 10 + (c + c2) / 2; // adaugam doua cifre la oglindit: ultima cifra si media aritmetica
+            }
+
+            while (oglindit > 0)
+            {
+                int c = oglindit % 10;
+                oglindit = oglindit / 10;
+                x = x * 10 + c;
+            }
+
+            Console.WriteLine($"Numarul cu cifrele cerute adaugate este: {x}");
+            Console.WriteLine();
+
+            // scrieti descompurea lui n in factori primi
+            x = n;
+            Console.Write($"{n} = ");
+            for (int d = 2; d <= x; d++)
+                if (x % d == 0)
+                {
+                    int p = 0;
+                    while(x % d == 0)
+                    {
+                        p++;
+                        x = x / d;
+                    }
+                    Console.Write($"{d}^{p} * ");
+                }
+            Console.WriteLine("1");
+
+            // verificati daca n este prim
+            bool ok = true; // presupunem ca n este prim, deci punem variabila pe true
+
+            if (n <= 1)
+                ok = false; // iar daca dovedim ca n nu este prim, punem variabila pe false
+            else if (n == 2)
+                ok = true;
+            else if (n % 2 == 0)
+                ok = false;
+            else
+            {
+                // for (int d = 2; d < n; d++) // cel mai ineficient
+                // for (int d = 2; d <= n/2; d++) // reducem cu jumatate numarul de parcurgeri
+                // for (int d = 2; d <= Math.Sqrt(n); d++) // daca nu am gasit niciun divizor pana la rad(n), nu o sa gasim altii
+                // for (int d = 2; d * d <= n; d++) // dar calculul radicalului este ineficient, asa ca vom folosi inecuatia echivalenta
+                for (int d = 3; d * d <= n; d += 2) // putem parcurge din 2 in 2 daca am facut deja verificarea cu 2
+                {
+                    if (n % d == 0)
+                    {
+                        ok = false;
+                    }
+                }
+            }
+
+            if(ok)
+                Console.WriteLine($"{n} este prim!");
+            else
+                Console.WriteLine($"{n} NU este prim :(");
+
+        }
+    }
+}
