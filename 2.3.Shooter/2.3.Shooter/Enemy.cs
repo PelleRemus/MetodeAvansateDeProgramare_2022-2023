@@ -25,7 +25,7 @@ namespace _2._3.Shooter
             // inamicul se apropie de noi cu speed pixeli.
             position.Y += (int)speed;
 
-            // dimensiunea creste doar cu o parte din viteza pentru a nu fi prea mare spre final
+            // dimensiunile cresc doar cu o parte din viteza pentru a nu fi prea mare spre final
             sizeX += speed / 16;
             sizeY += speed / 8;
 

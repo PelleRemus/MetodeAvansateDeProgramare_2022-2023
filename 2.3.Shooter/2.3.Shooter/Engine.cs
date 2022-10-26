@@ -14,7 +14,8 @@ namespace _2._3.Shooter
         public static Graphics graphics;
         public static Bitmap bitmap;
 
-        public static int horizon = 200, time = 0;
+        public static int horizon = 200;
+        public static double fortHealth = 100, time = 0;
 
         public static void Init(Form1 f1)
         {
@@ -24,26 +25,47 @@ namespace _2._3.Shooter
             graphics = Graphics.FromImage(bitmap);
 
             // aceste date sunt hardcodate deocamdata
-            wave.Add(new Enemy(100, 5, 0, 50, 100, 0));
-            wave.Add(new Enemy(100, 5, 0, 50, 100, 20));
-            wave.Add(new Enemy(100, 5, 0, 50, 100, 35));
-            wave.Add(new Enemy(100, 5, 0, 50, 100, 45));
-            wave.Add(new Enemy(100, 5, 0, 50, 100, 55));
+            wave.Add(new Enemy(100, 5, 20, 50, 100, 0));
+            wave.Add(new Enemy(100, 5, 20, 50, 100, 20));
+            wave.Add(new Enemy(100, 5, 20, 50, 100, 35));
+            wave.Add(new Enemy(100, 5, 20, 50, 100, 45));
+            wave.Add(new Enemy(100, 5, 20, 50, 100, 55));
         }
 
         public static void Tick()
         {
             time++;
+            form.TimeLabel.Text = $"{time / 10}s";
 
+            // adaugam inamicii in lista de inamici afisati doar cand se ajunge la spawnTime
             if (wave.Any() && wave[0].spawnTime <= time)
             {
                 enemies.Add(wave[0]);
                 wave.RemoveAt(0);
             }
 
-            foreach (Enemy enemy in enemies)
+            // miscam fiecare inamic mai in fata
+            for (int i = 0; i < enemies.Count; i++)
             {
+                Enemy enemy = enemies[i];
                 enemy.Move();
+
+                // verificam daca inamicul nu mai este vazut, caz in care primim damage
+                if(enemy.position.Y >= form.Height)
+                {
+                    fortHealth -= enemy.damage;
+                    form.HealthLabel.Text = $"Health {fortHealth}";
+                    enemies.Remove(enemies[i]);
+                    i--;
+                }
+            }
+
+            // verificam daca pierdem
+            if(fortHealth <= 0)
+            {
+                form.timer1.Enabled = false;
+                MessageBox.Show("You fort walls were destroyed!", "You Lose!");
+                form.Close();
             }
             UpdateDisplay();
         }
@@ -77,7 +99,7 @@ namespace _2._3.Shooter
             // Aici setam imaginea de fundal
             graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
 
-            // parcurgem toti inamicii pentru a-i afisa pe toti. si aici vom avea imagini.
+            // parcurgem toti inamicii pentru a afisa imaginea acestora pentru toti.
             foreach (Enemy enemy in enemies)
             {
                 graphics.DrawImage(form.normalZombie, enemy.position.X, enemy.position.Y,

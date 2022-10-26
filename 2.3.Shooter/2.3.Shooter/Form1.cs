@@ -20,6 +20,9 @@ namespace _2._3.Shooter
             // deci trebuie sa le setam in cod dupa aceea
             pictureBox1.Width = this.Width;
             pictureBox1.Height = this.Height;
+
+            // asa ne asiguram ca background-ul label-urilor este in functie de imaginea de fundal
+            TimeLabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
             Engine.Init(this);
         }
 
@@ -28,7 +31,17 @@ namespace _2._3.Shooter
             // daca cheia apasata este Esc, doar atunci inchidem jocul
             if (e.KeyCode == Keys.Escape)
             {
-                Close();
+                // ne asiguram ca jocul nu continua sa ruleze cat timp pop-up-ul este afisat
+                timer1.Enabled = false;
+                // salvam optiunea aleasa intr-o variabila
+                var option = MessageBox.Show("Are you sure you want to exit this game? Your progress will not be saved",
+                    "Exit Game", MessageBoxButtons.OKCancel);
+
+                // si inchidem jocul doar daca jucatorul a apasat OK
+                if (option == DialogResult.OK)
+                    Close();
+                // pornim jocul la loc in cazul in care nu s-a ales sa se inchida jocul
+                timer1.Enabled = true;
             }
         }
 
@@ -39,7 +52,7 @@ namespace _2._3.Shooter
             Engine.Shoot(e.Location);
         }
 
-        // la fiecare 100ms, miscam fiecare inamic mai in fata si actualizam displayul
+        // aceasta metoda se apeleaza la fiecare 100ms
         private void timer1_Tick(object sender, EventArgs e)
         {
             Engine.Tick();
