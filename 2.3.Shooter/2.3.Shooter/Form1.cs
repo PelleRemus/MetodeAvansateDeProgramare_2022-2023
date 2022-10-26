@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace _2._3.Shooter
 {
     public partial class Form1 : Form
     {
+        public Image background = Image.FromFile("../../Images/Background.png");
+        public Image normalZombie = Image.FromFile("../../Images/NormalZombie.png");
+
         public Form1()
         {
             InitializeComponent();
@@ -38,11 +42,7 @@ namespace _2._3.Shooter
         // la fiecare 100ms, miscam fiecare inamic mai in fata si actualizam displayul
         private void timer1_Tick(object sender, EventArgs e)
         {
-            foreach (Enemy enemy in Engine.enemies)
-            {
-                enemy.Move();
-            }
-            Engine.UpdateDisplay();
+            Engine.Tick();
         }
     }
 }
