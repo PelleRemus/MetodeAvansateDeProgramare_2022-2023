@@ -36,7 +36,9 @@ namespace _2._3.Shooter
             this.TimeLabel = new System.Windows.Forms.Label();
             this.HealthLabel = new System.Windows.Forms.Label();
             this.WaveLabel = new System.Windows.Forms.Label();
+            this.Gun = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Gun)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -50,6 +52,7 @@ namespace _2._3.Shooter
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
             this.pictureBox1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseClick);
+            this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseMove);
             // 
             // timer1
             // 
@@ -94,11 +97,23 @@ namespace _2._3.Shooter
             this.WaveLabel.TabIndex = 3;
             this.WaveLabel.Text = "Wave 1";
             // 
+            // Gun
+            // 
+            this.Gun.BackColor = System.Drawing.Color.Transparent;
+            this.Gun.Image = ((System.Drawing.Image)(resources.GetObject("Gun.Image")));
+            this.Gun.Location = new System.Drawing.Point(587, 366);
+            this.Gun.Name = "Gun";
+            this.Gun.Size = new System.Drawing.Size(200, 200);
+            this.Gun.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Gun.TabIndex = 4;
+            this.Gun.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1259, 637);
+            this.Controls.Add(this.Gun);
             this.Controls.Add(this.WaveLabel);
             this.Controls.Add(this.HealthLabel);
             this.Controls.Add(this.TimeLabel);
@@ -110,6 +125,7 @@ namespace _2._3.Shooter
             this.Load += new System.EventHandler(this.Form1_Load);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Gun)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -122,6 +138,7 @@ namespace _2._3.Shooter
         public System.Windows.Forms.Label TimeLabel;
         public System.Windows.Forms.Label HealthLabel;
         public System.Windows.Forms.Label WaveLabel;
+        private System.Windows.Forms.PictureBox Gun;
     }
 }
 

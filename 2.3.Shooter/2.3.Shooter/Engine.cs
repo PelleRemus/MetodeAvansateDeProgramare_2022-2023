@@ -10,11 +10,12 @@ namespace _2._3.Shooter
     {
         public static Form1 form;
         public static Random random = new Random();
-        public static List<Enemy> enemies = new List<Enemy>(), wave = new List<Enemy>();
+        public static List<Enemy> enemies = new List<Enemy>(), currentWave = new List<Enemy>();
+        public static List<List<Enemy>> waves = new List<List<Enemy>>();
         public static Graphics graphics;
         public static Bitmap bitmap;
 
-        public static int horizon = 200;
+        public static int horizon = 200, wave = 1;
         public static double fortHealth = 100, time = 0;
 
         public static void Init(Form1 f1)
@@ -25,11 +26,27 @@ namespace _2._3.Shooter
             graphics = Graphics.FromImage(bitmap);
 
             // aceste date sunt hardcodate deocamdata
-            wave.Add(new Enemy(100, 5, 20, 50, 100, 0));
-            wave.Add(new Enemy(100, 5, 20, 50, 100, 20));
-            wave.Add(new Enemy(100, 5, 20, 50, 100, 35));
-            wave.Add(new Enemy(100, 5, 20, 50, 100, 45));
-            wave.Add(new Enemy(100, 5, 20, 50, 100, 55));
+            var wave1 = new List<Enemy>();
+            wave1.Add(new Enemy(100, 5, 20, 50, 100, 0));
+            wave1.Add(new Enemy(100, 5, 20, 50, 100, 20));
+            wave1.Add(new Enemy(100, 5, 20, 50, 100, 35));
+            wave1.Add(new Enemy(100, 5, 20, 50, 100, 45));
+            wave1.Add(new Enemy(100, 5, 20, 50, 100, 55));
+
+
+            var wave2 = new List<Enemy>();
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 0));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 10));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 17));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 22));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 27));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 37));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 42));
+            wave2.Add(new Enemy(100, 5, 20, 50, 100, 52));
+
+            waves.Add(wave1);
+            waves.Add(wave2);
+            currentWave = wave1;
         }
 
         public static void Tick()
@@ -37,36 +54,24 @@ namespace _2._3.Shooter
             time++;
             form.TimeLabel.Text = $"{time / 10}s";
 
+            // daca nu mai exista inamici, ori trecem la urmatorul wave, ori ai castigat
+            if (currentWave.Count == 0 && enemies.Count == 0)
+            {
+                if (wave < waves.Count)
+                    NextWave();
+                else
+                    Win();
+            }
+
             // adaugam inamicii in lista de inamici afisati doar cand se ajunge la spawnTime
-            if (wave.Any() && wave[0].spawnTime <= time)
+            if (currentWave.Any() && currentWave[0].spawnTime <= time)
             {
-                enemies.Add(wave[0]);
-                wave.RemoveAt(0);
+                enemies.Add(currentWave[0]);
+                currentWave.RemoveAt(0);
             }
 
-            // miscam fiecare inamic mai in fata
-            for (int i = 0; i < enemies.Count; i++)
-            {
-                Enemy enemy = enemies[i];
-                enemy.Move();
-
-                // verificam daca inamicul nu mai este vazut, caz in care primim damage
-                if(enemy.position.Y >= form.Height)
-                {
-                    fortHealth -= enemy.damage;
-                    form.HealthLabel.Text = $"Health {fortHealth}";
-                    enemies.Remove(enemies[i]);
-                    i--;
-                }
-            }
-
-            // verificam daca pierdem
-            if(fortHealth <= 0)
-            {
-                form.timer1.Enabled = false;
-                MessageBox.Show("You fort walls were destroyed!", "You Lose!");
-                form.Close();
-            }
+            MoveEnemies();
+            CheckIfYouLose();
             UpdateDisplay();
         }
 
@@ -83,15 +88,15 @@ namespace _2._3.Shooter
                     enemies.Remove(enemies[i]);
                     i--;
                 }
-            }
+            }   
+        }
 
-            // daca nu mai exista inamici, inseamna ca ai castigat
-            if(wave.Count == 0 && enemies.Count == 0)
-            {
-                form.timer1.Enabled = false;
-                MessageBox.Show("You defeated all the enemies!", "You Win!");
-                form.Close();
-            }    
+        public static void NextWave()
+        {
+            wave++;
+            currentWave = waves[wave-1];
+            time = 0;
+            form.WaveLabel.Text = $"Wave {wave}";
         }
 
         public static void UpdateDisplay()
@@ -99,7 +104,9 @@ namespace _2._3.Shooter
             // Aici setam imaginea de fundal
             graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
 
-            // parcurgem toti inamicii pentru a afisa imaginea acestora pentru toti.
+            // parcurgem toti inamicii pentru a afisa imaginea acestora pentru toti,
+            // dar nu inainte de a-i sorta pentru a ne asigura ca se afla in ordinea buna
+            enemies.Sort((Enemy e1, Enemy e2) => e1.position.Y - e2.position.Y);
             foreach (Enemy enemy in enemies)
             {
                 graphics.DrawImage(form.normalZombie, enemy.position.X, enemy.position.Y,
@@ -107,6 +114,43 @@ namespace _2._3.Shooter
             }
 
             form.pictureBox1.Image = bitmap;
+        }
+
+        public static void MoveEnemies()
+        {
+            for (int i = 0; i < enemies.Count; i++)
+            {
+                Enemy enemy = enemies[i];
+                enemy.Move();
+
+                // verificam daca inamicul nu mai este vazut, caz in care primim damage
+                if (enemy.position.Y >= form.Height)
+                {
+                    fortHealth -= enemy.damage;
+                    form.HealthLabel.Text = $"Health {fortHealth}";
+                    enemies.Remove(enemies[i]);
+                    i--;
+                }
+            }
+        }
+
+        public static void Win()
+        {
+            form.timer1.Enabled = false;
+            form.backgroundSound.Stop();
+            MessageBox.Show("You defeated all the enemies!", "You Win!");
+            form.Close();
+        }
+
+        public static void CheckIfYouLose()
+        {
+            if (fortHealth <= 0)
+            {
+                form.timer1.Enabled = false;
+                form.backgroundSound.Stop();
+                MessageBox.Show("You fort walls were destroyed!", "You Lose!");
+                form.Close();
+            }
         }
 
         public static Point GetRandomPoint(int sizeX, int sizeY)
