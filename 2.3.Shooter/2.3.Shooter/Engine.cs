@@ -27,21 +27,21 @@ namespace _2._3.Shooter
 
             // aceste date sunt hardcodate deocamdata
             var wave1 = new List<Enemy>();
-            wave1.Add(new NormalEnemy(0));
-            wave1.Add(new NormalEnemy(20));
-            wave1.Add(new NormalEnemy(35));
-            wave1.Add(new NormalEnemy(45));
-            wave1.Add(new NormalEnemy(55));
+            wave1.Add(new NormalZombie(0));
+            wave1.Add(new NormalZombie(20));
+            wave1.Add(new NormalZombie(35));
+            wave1.Add(new NormalZombie(45));
+            wave1.Add(new NormalZombie(55));
 
             var wave2 = new List<Enemy>();
-            wave2.Add(new NormalEnemy(0));
-            wave2.Add(new NormalEnemy(10));
-            wave2.Add(new NormalEnemy(17));
-            wave2.Add(new NormalEnemy(22));
-            wave2.Add(new NormalEnemy(27));
-            wave2.Add(new NormalEnemy(37));
-            wave2.Add(new FatEnemy(42));
-            wave2.Add(new FatEnemy(52));
+            wave2.Add(new NormalZombie(0));
+            wave2.Add(new NormalZombie(10));
+            wave2.Add(new NormalZombie(17));
+            wave2.Add(new NormalZombie(22));
+            wave2.Add(new NormalZombie(27));
+            wave2.Add(new NormalZombie(37));
+            wave2.Add(new FatZombie(42));
+            wave2.Add(new FatZombie(52));
 
             waves.Add(wave1);
             waves.Add(wave2);
@@ -107,9 +107,7 @@ namespace _2._3.Shooter
             // dar nu inainte de a-i sorta pentru a ne asigura ca se afla in ordinea buna
             enemies.Sort((Enemy e1, Enemy e2) => e1.position.Y - e2.position.Y);
             foreach (Enemy enemy in enemies)
-            {
                 enemy.Draw();
-            }
 
             form.pictureBox1.Image = bitmap;
         }

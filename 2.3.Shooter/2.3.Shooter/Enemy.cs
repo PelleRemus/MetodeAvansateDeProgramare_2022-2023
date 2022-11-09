@@ -9,7 +9,7 @@ namespace _2._3.Shooter
         public Point position;
         public Image image;
 
-        public Enemy(double health, double speed, double damage, double sizeX, double sizeY, int spawnTime)
+        public Enemy(double health, double speed, double damage, double sizeX, double sizeY, int spawnTime, Image image)
         {
             this.health = health;
             this.speed = speed;
@@ -17,13 +17,31 @@ namespace _2._3.Shooter
             this.sizeX = sizeX;
             this.sizeY = sizeY;
             this.spawnTime = spawnTime;
+            this.image = image;
             position = Engine.GetRandomPoint((int)sizeX, (int)sizeY);
             positionX = position.X;
         }
 
-        public abstract void Move();
+        protected abstract bool IsHeadShot(Point click);
 
-        public abstract void Draw();
+        public virtual void Move()
+        {
+            // inamicul se apropie de noi cu speed pixeli.
+            position.Y += (int)speed;
+
+            // dimensiunile cresc doar cu o parte din viteza pentru a nu fi prea mare spre final
+            sizeX += speed / 16;
+            sizeY += speed / 8;
+
+            // iar pozitia scade cu jumatate din cat a crescut dimensiunea pentru a pastra inamicul centrat
+            positionX -= speed / 32;
+            position.X = (int)positionX;
+        }
+
+        public void Draw()
+        {
+            Engine.graphics.DrawImage(image, position.X, position.Y, (int)sizeX, (int)sizeY);
+        }
 
         public void GetShot(Point click)
         {
@@ -37,7 +55,7 @@ namespace _2._3.Shooter
                     return;
 
                 // verificam daca este headshot
-                if (click.Y - position.Y < sizeY / 6)
+                if (IsHeadShot(click))
                 {
                     health -= 50;
                     Engine.graphics.DrawString("50", new Font("Arial", 12, FontStyle.Bold),
