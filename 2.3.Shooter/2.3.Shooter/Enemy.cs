@@ -2,11 +2,12 @@
 
 namespace _2._3.Shooter
 {
-    public class Enemy
+    public abstract class Enemy
     {
         public double health, speed, damage, sizeX, sizeY, positionX;
         public int spawnTime;
         public Point position;
+        public Image image;
 
         public Enemy(double health, double speed, double damage, double sizeX, double sizeY, int spawnTime)
         {
@@ -20,19 +21,9 @@ namespace _2._3.Shooter
             positionX = position.X;
         }
 
-        public void Move()
-        {
-            // inamicul se apropie de noi cu speed pixeli.
-            position.Y += (int)speed;
+        public abstract void Move();
 
-            // dimensiunile cresc doar cu o parte din viteza pentru a nu fi prea mare spre final
-            sizeX += speed / 16;
-            sizeY += speed / 8;
-
-            // iar pozitia scade cu jumatate din cat a crescut dimensiunea pentru a pastra inamicul centrat
-            positionX -= speed / 32;
-            position.X = (int)positionX;
-        }
+        public abstract void Draw();
 
         public void GetShot(Point click)
         {
@@ -42,14 +33,7 @@ namespace _2._3.Shooter
                 && click.Y > position.Y && click.Y < position.Y + sizeY)
             {
                 // daca pixelul din imagine este transparent, inamicul nu a fost impuscat
-                int x = click.X - position.X;
-                int y = click.Y - position.Y;
-
-                Bitmap zombie = new Bitmap((int)sizeX, (int)sizeY);
-                Graphics grp = Graphics.FromImage(zombie);
-                grp.DrawImage(Engine.form.normalZombie, 0, 0, (int)sizeX, (int)sizeY);
-                
-                if (zombie.GetPixel(x, y).ToArgb() == 0)
+                if (Engine.IsPixelTransparent(click, this))
                     return;
 
                 // viata scade cu 20

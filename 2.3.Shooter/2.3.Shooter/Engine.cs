@@ -27,22 +27,21 @@ namespace _2._3.Shooter
 
             // aceste date sunt hardcodate deocamdata
             var wave1 = new List<Enemy>();
-            wave1.Add(new Enemy(100, 5, 20, 50, 100, 0));
-            wave1.Add(new Enemy(100, 5, 20, 50, 100, 20));
-            wave1.Add(new Enemy(100, 5, 20, 50, 100, 35));
-            wave1.Add(new Enemy(100, 5, 20, 50, 100, 45));
-            wave1.Add(new Enemy(100, 5, 20, 50, 100, 55));
-
+            wave1.Add(new NormalEnemy(0));
+            wave1.Add(new NormalEnemy(20));
+            wave1.Add(new NormalEnemy(35));
+            wave1.Add(new NormalEnemy(45));
+            wave1.Add(new NormalEnemy(55));
 
             var wave2 = new List<Enemy>();
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 0));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 10));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 17));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 22));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 27));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 37));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 42));
-            wave2.Add(new Enemy(100, 5, 20, 50, 100, 52));
+            wave2.Add(new NormalEnemy(0));
+            wave2.Add(new NormalEnemy(10));
+            wave2.Add(new NormalEnemy(17));
+            wave2.Add(new NormalEnemy(22));
+            wave2.Add(new NormalEnemy(27));
+            wave2.Add(new NormalEnemy(37));
+            wave2.Add(new NormalEnemy(42));
+            wave2.Add(new NormalEnemy(52));
 
             waves.Add(wave1);
             waves.Add(wave2);
@@ -109,11 +108,22 @@ namespace _2._3.Shooter
             enemies.Sort((Enemy e1, Enemy e2) => e1.position.Y - e2.position.Y);
             foreach (Enemy enemy in enemies)
             {
-                graphics.DrawImage(form.normalZombie, enemy.position.X, enemy.position.Y,
-                    (int)enemy.sizeX, (int)enemy.sizeY);
+                enemy.Draw();
             }
 
             form.pictureBox1.Image = bitmap;
+        }
+
+        public static bool IsPixelTransparent(Point click, Enemy enemy)
+        {
+            int x = click.X - enemy.position.X;
+            int y = click.Y - enemy.position.Y;
+
+            Bitmap zombie = new Bitmap((int)enemy.sizeX, (int)enemy.sizeY);
+            Graphics grp = Graphics.FromImage(zombie);
+            grp.DrawImage(enemy.image, 0, 0, (int)enemy.sizeX, (int)enemy.sizeY);
+
+            return zombie.GetPixel(x, y).ToArgb() == 0;
         }
 
         public static void MoveEnemies()
