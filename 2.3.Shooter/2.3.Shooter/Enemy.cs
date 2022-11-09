@@ -36,12 +36,22 @@ namespace _2._3.Shooter
                 if (Engine.IsPixelTransparent(click, this))
                     return;
 
-                // viata scade cu 20
-                health -= 20;
+                // verificam daca este headshot
+                if (click.Y - position.Y < sizeY / 6)
+                {
+                    health -= 50;
+                    Engine.graphics.DrawString("50", new Font("Arial", 12, FontStyle.Bold),
+                        new SolidBrush(Color.Red), click.X, click.Y - 20);
+                }
+                else
+                {
+                    // viata scade cu 20
+                    health -= 20;
 
-                // si afisam scrisul cu damage-ul primit chiar deasupra clickului dat
-                Engine.graphics.DrawString("20", new Font("Arial", 12, FontStyle.Bold),
-                    new SolidBrush(Color.White), click.X, click.Y - 20);
+                    // si afisam scrisul cu damage-ul primit chiar deasupra clickului dat
+                    Engine.graphics.DrawString("20", new Font("Arial", 12, FontStyle.Bold),
+                        new SolidBrush(Color.White), click.X, click.Y - 20);
+                }
                 Engine.form.pictureBox1.Image = Engine.bitmap;
             }
         }

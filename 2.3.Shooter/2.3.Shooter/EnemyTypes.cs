@@ -35,4 +35,33 @@ namespace _2._3.Shooter
             Engine.graphics.DrawImage(image, position.X, position.Y, (int)sizeX, (int)sizeY);
         }
     }
+
+    public class FatEnemy : Enemy
+    {
+        public Image fatZombie = Image.FromFile("../../Images/FatZombie.png");
+
+        public FatEnemy(int spawnTime) : base(250, 2, 50, 100, 100, spawnTime)
+        {
+            image = fatZombie;
+        }
+
+        public override void Move()
+        {
+            // inamicul se apropie de noi cu speed pixeli.
+            position.Y += (int)speed;
+
+            // dimensiunile cresc doar cu o parte din viteza pentru a nu fi prea mare spre final
+            sizeX += speed / 16;
+            sizeY += speed / 8;
+
+            // iar pozitia scade cu jumatate din cat a crescut dimensiunea pentru a pastra inamicul centrat
+            positionX -= speed / 32;
+            position.X = (int)positionX;
+        }
+
+        public override void Draw()
+        {
+            Engine.graphics.DrawImage(image, position.X, position.Y, (int)sizeX, (int)sizeY);
+        }
+    }
 }

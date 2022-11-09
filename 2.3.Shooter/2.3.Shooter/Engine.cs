@@ -40,8 +40,8 @@ namespace _2._3.Shooter
             wave2.Add(new NormalEnemy(22));
             wave2.Add(new NormalEnemy(27));
             wave2.Add(new NormalEnemy(37));
-            wave2.Add(new NormalEnemy(42));
-            wave2.Add(new NormalEnemy(52));
+            wave2.Add(new FatEnemy(42));
+            wave2.Add(new FatEnemy(52));
 
             waves.Add(wave1);
             waves.Add(wave2);
