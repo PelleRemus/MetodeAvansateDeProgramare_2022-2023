@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -12,8 +13,8 @@ namespace _2._3.Shooter
         public static Random random = new Random();
         public static List<Enemy> enemies = new List<Enemy>(), currentWave = new List<Enemy>();
         public static List<List<Enemy>> waves = new List<List<Enemy>>();
-        public static Graphics graphics;
-        public static Bitmap bitmap;
+        public static Graphics graphics, healthBarGraphics;
+        public static Bitmap bitmap, healthBarBitmap;
 
         public static int horizon = 200, wave = 1;
         public static double fortHealth = 100, time = 0;
@@ -24,6 +25,10 @@ namespace _2._3.Shooter
             form = f1;
             bitmap = new Bitmap(form.Width, form.Height);
             graphics = Graphics.FromImage(bitmap);
+
+            healthBarBitmap = new Bitmap(form.HealthBar.Width, form.HealthBar.Height);
+            healthBarGraphics = Graphics.FromImage(healthBarBitmap);
+            DrawGradient();
 
             // aceste date sunt hardcodate deocamdata
             var wave1 = new List<Enemy>();
@@ -101,7 +106,7 @@ namespace _2._3.Shooter
         public static void UpdateDisplay()
         {
             // Aici setam imaginea de fundal
-            graphics.DrawImage(form.background, 0, 0, form.Width, form.Height);
+            graphics.DrawImage(form.background, 0, 0, form.Width, form.pictureBox1.Height);
 
             // parcurgem toti inamicii pentru a afisa imaginea acestora pentru toti,
             // dar nu inainte de a-i sorta pentru a ne asigura ca se afla in ordinea buna
@@ -110,6 +115,41 @@ namespace _2._3.Shooter
                 enemy.Draw();
 
             form.pictureBox1.Image = bitmap;
+        }
+
+        public static void BlurBackground()
+        {
+            // punem un strat semitransparent de culoare neagra peste intreaga imagine
+            graphics.FillRectangle(new SolidBrush(Color.FromArgb(150, Color.Black)),
+                0, 0, form.Width, form.Height);
+            form.pictureBox1.Image = bitmap;
+        }
+
+        public static void DrawGradient()
+        {
+            // calculam procentul de viata ramasa ce trebuie afisat
+            float width = form.HealthBar.Width * (float)(fortHealth / 100);
+            // aceste brush-uri sunt necesare pentru a avea gradient
+            var redYellowBrush = new LinearGradientBrush(
+                new RectangleF(0, 0, form.HealthBar.Width / 2, form.HealthBar.Height),
+                Color.Red, Color.Yellow, 0f);
+            var yellowGreenBrush = new LinearGradientBrush(
+                new RectangleF(-1, 0, form.HealthBar.Width / 2, form.HealthBar.Height),
+                Color.Yellow, Color.Green, 0f);
+
+            // desenam intai gradientul de la rosu la verde
+            healthBarGraphics.FillRectangle(redYellowBrush,
+                0, 0, form.HealthBar.Width / 2, form.HealthBar.Height);
+            healthBarGraphics.FillRectangle(yellowGreenBrush,
+                form.HealthBar.Width / 2, 0, form.HealthBar.Width / 2, form.HealthBar.Height);
+            // apoi ascundem cu o culoare gri inchis procentul de viata pierduta, si inconjuram cu un chenar de culoare gri mai deschis
+            // acestea vor da efectul unui recipient care se goleste pe masura ce pierdem viata
+            healthBarGraphics.FillRectangle(new SolidBrush(Color.FromArgb(130, 130, 130)),
+                width, 0, form.HealthBar.Width, form.HealthBar.Height);
+            healthBarGraphics.DrawRectangle(new Pen(Color.DarkGray, 6),
+                0, 0, form.HealthBar.Width, form.HealthBar.Height);
+
+            form.HealthBar.Image = healthBarBitmap;
         }
 
         public static bool IsPixelTransparent(Point click, Enemy enemy)
@@ -132,10 +172,11 @@ namespace _2._3.Shooter
                 enemy.Move();
 
                 // verificam daca inamicul nu mai este vazut, caz in care primim damage
-                if (enemy.position.Y >= form.Height)
+                if (enemy.position.Y >= form.pictureBox1.Height)
                 {
                     fortHealth -= enemy.damage;
-                    form.HealthLabel.Text = $"Health {fortHealth}";
+                    DrawGradient();
+                    form.HealthLabel.Text = $" {fortHealth}/100";
                     enemies.Remove(enemies[i]);
                     i--;
                 }

@@ -20,19 +20,39 @@ namespace _2._3.Shooter
         {
             // nu stim latimea si inaltimea pana nu intram in full screen
             // deci trebuie sa le setam in cod dupa aceea
-            pictureBox1.Width = this.Width;
-            pictureBox1.Height = this.Height;
+            pictureBox1.Width = MenuScreen.Width = StatusBar.Width = this.Width;
+            pictureBox1.Height = this.Height - StatusBar.Height;
+            MenuScreen.Height = this.Height;
 
             // asa ne asiguram ca background-ul label-urilor este in functie de imaginea de fundal
-            TimeLabel.Parent = WaveLabel.Parent = HealthLabel.Parent = pictureBox1;
+            TimeLabel.Parent = WaveLabel.Parent = HealthBar.Parent = StatusBar;
             Gun.Parent = pictureBox1;
+            HealthLabel.Parent = HealthBar;
 
-            // this.Cursor = new Cursor("../../Images/Cursor.png"); // nu functioneaza
+            // dam valori butoanelor de start si exit pentru a aparea asezate frumos in functie de imagine
+            StartButton.Parent = ExitButton.Parent = MenuScreen;
+            StartButton.Left = ExitButton.Left = this.Width / 2 - 3 * StartButton.Width / 8;
+            StartButton.Top = this.Height - StartButton.Height * 3;
+            ExitButton.Top = this.Height - StartButton.Height * 2;
+
             this.Cursor = Cursors.Cross;
+            Engine.Init(this);
+        }
+
+        private void ExitButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void StartButton_Click(object sender, EventArgs e)
+        {
+            // pornim timer-ul doar dupa ce apasam Play
+            timer1.Enabled = true;
+            MenuScreen.Enabled = false;
+            MenuScreen.Visible = false;
 
             // pornim sunetul de fundal
             backgroundSound.PlayLooping();
-            Engine.Init(this);
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
@@ -42,6 +62,8 @@ namespace _2._3.Shooter
             {
                 // ne asiguram ca jocul nu continua sa ruleze cat timp pop-up-ul este afisat
                 timer1.Enabled = false;
+                Engine.BlurBackground();
+
                 // salvam optiunea aleasa intr-o variabila
                 var option = MessageBox.Show("Are you sure you want to exit this game? Your progress will not be saved",
                     "Exit Game", MessageBoxButtons.OKCancel);
