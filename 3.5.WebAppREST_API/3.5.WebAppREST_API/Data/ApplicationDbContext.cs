@@ -15,5 +15,18 @@ namespace _3._5.WebAppREST_API.Data
         }
 
         public DbSet<Person> People { get; set; }
+        public DbSet<Email> Emails { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Email>()
+                .HasOne(e => e.From)
+                .WithMany(p => p.SentEmails);
+
+            /*modelBuilder.Entity<Email>()
+                .HasMany(e => e.To)
+                .WithMany(p => p.InboxEmails)
+                .UsingEntity(j => j.*/
+        }
     }
 }

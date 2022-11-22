@@ -152,7 +152,7 @@ namespace _2._3.Shooter
             // 
             this.StatusBar.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.StatusBar.BackColor = System.Drawing.Color.SteelBlue;
-            this.StatusBar.Location = new System.Drawing.Point(0, 537);
+            this.StatusBar.Location = new System.Drawing.Point(0, 538);
             this.StatusBar.Name = "StatusBar";
             this.StatusBar.Size = new System.Drawing.Size(1260, 100);
             this.StatusBar.TabIndex = 8;

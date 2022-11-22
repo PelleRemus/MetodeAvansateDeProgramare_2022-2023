@@ -14,5 +14,8 @@ namespace _3._5.WebAppREST_API.Models
         public string Country { get; set; }
         public string Ocupation { get; set; }
         public int Age { get; set; }
+
+        public List<Email> SentEmails { get; set; }
+        public List<Email> InboxEmails { get; set; }
     }
 }

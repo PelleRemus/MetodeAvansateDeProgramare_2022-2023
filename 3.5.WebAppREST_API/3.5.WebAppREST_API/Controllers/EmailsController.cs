@@ -13,32 +13,30 @@ namespace _3._5.WebAppREST_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PeopleController : ControllerBase
+    public class EmailsController : ControllerBase
     {
-        private readonly PeopleRepository _peopleRepository; 
+        private readonly EmailsRepository _emailsRepository;
 
-        public PeopleController(ApplicationDbContext applicationDbContext)
+        public EmailsController(ApplicationDbContext applicationDbContext)
         {
-            _peopleRepository = new PeopleRepository(applicationDbContext);
+            _emailsRepository = new EmailsRepository(applicationDbContext);
         }
 
-        // GET: api/People
+        // GET: api/Emails
         [HttpGet]
-        public ActionResult<IEnumerable<Person>> GetFilteredAndPaginated(
-            [FromQuery] string search, [FromQuery] int page, [FromQuery] int pageSize)
+        public ActionResult<IEnumerable<Email>> Get()
         {
-            var people = _peopleRepository.GetFilteredAndPaginated(search, page, pageSize);
-            return new OkObjectResult(people);
+            return _emailsRepository.GetAll();
         }
 
-        // GET api/People/5
+        // GET api/Emails/5
         [HttpGet("{id}")]
-        public ActionResult<Person> Get(int id)
+        public ActionResult<Email> Get(int id)
         {
             try
             {
-                Person person = _peopleRepository.GetOne(id);
-                return new OkObjectResult(person);
+                Email email = _emailsRepository.GetOne(id);
+                return new OkObjectResult(email);
             }
             catch (InvalidOperationException ioe)
             {
@@ -46,21 +44,21 @@ namespace _3._5.WebAppREST_API.Controllers
             }
         }
 
-        // POST api/People
+        // POST api/Emails
         [HttpPost]
-        public ActionResult Post([FromBody] Person body)
+        public ActionResult Post([FromBody] Email body)
         {
-            _peopleRepository.CreateOne(body);
+            _emailsRepository.CreateOne(body);
             return new OkResult();
         }
 
-        // PUT api/People/5
+        // PUT api/Emails/5
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Person body)
+        public ActionResult Put(int id, [FromBody] Email body)
         {
             try
             {
-                _peopleRepository.EditOne(id, body);
+                _emailsRepository.EditOne(id, body);
                 return new OkResult();
             }
             catch (InvalidOperationException ioe)
@@ -69,13 +67,13 @@ namespace _3._5.WebAppREST_API.Controllers
             }
         }
 
-        // DELETE api/People/5
+        // DELETE api/Emails/5
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
             try
             {
-                _peopleRepository.DeleteOne(id);
+                _emailsRepository.DeleteOne(id);
                 return new OkResult();
             }
             catch (InvalidOperationException ioe)
