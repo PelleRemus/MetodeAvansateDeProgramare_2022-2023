@@ -1,0 +1,26 @@
+html {
+    height: 100vh;
+}
+
+body {
+    height: 100vh;
+    background-color: rgb(70,70,70) !important;
+}
+
+.container {
+    padding-top: 20px;
+}
+
+.h-92 {
+    height: 92vh;
+}
+
+.list-group-item {
+    background-color: #373B3E !important;
+    color: white !important;
+}
+
+.list-group-item.active {
+    background-color: #DC3545 !important;
+    border-color: #DC3545 !important;
+}
