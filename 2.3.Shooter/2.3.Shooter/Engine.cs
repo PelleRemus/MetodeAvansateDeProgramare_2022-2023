@@ -18,7 +18,7 @@ namespace _2._3.Shooter
         public static List<List<Enemy>> waves = new List<List<Enemy>>();
         public static List<DamageNumber> damages = new List<DamageNumber>();
 
-        public static int horizon = 200, wave = 1;
+        public static int horizon = 200, wave = 1, damageOpacity = 0;
         public static double fortHealth = 100, time = 0;
 
         public static void Init(Form1 f1)
@@ -76,6 +76,10 @@ namespace _2._3.Shooter
                 currentWave.RemoveAt(0);
             }
 
+            damageOpacity--;
+            if (damageOpacity <= 0)
+                damageOpacity = 0;
+
             MoveEnemies();
             CheckIfYouLose();
             UpdateDisplay();
@@ -118,6 +122,9 @@ namespace _2._3.Shooter
 
             foreach (var damageNumber in damages)
                 damageNumber.Draw();
+
+            for(int i=0; i<damageOpacity; i++)
+                graphics.DrawImage(form.damageTaken, 0, 0, form.Width, form.pictureBox1.Height);
 
             form.pictureBox1.Image = bitmap;
         }
@@ -181,6 +188,7 @@ namespace _2._3.Shooter
                 {
                     fortHealth -= enemy.damage;
                     DrawGradient();
+                    damageOpacity += 10;
                     form.HealthLabel.Text = $" {fortHealth}/100";
                     enemies.Remove(enemies[i]);
                     i--;

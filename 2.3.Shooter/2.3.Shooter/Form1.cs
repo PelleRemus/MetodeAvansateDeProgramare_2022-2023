@@ -8,6 +8,7 @@ namespace _2._3.Shooter
     public partial class Form1 : Form
     {
         public Image background = Image.FromFile("../../Images/Background.png");
+        public Image damageTaken = Image.FromFile("../../Images/DamageTaken.png");
         public Image pistol = Image.FromFile("../../Images/Pistol.png");
         public SoundPlayer backgroundSound = new SoundPlayer("../../Sounds/Thriller.wav");
 
