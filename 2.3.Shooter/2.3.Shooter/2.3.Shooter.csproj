@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DamageNumber.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="EnemyTypes.cs" />
     <Compile Include="Engine.cs" />

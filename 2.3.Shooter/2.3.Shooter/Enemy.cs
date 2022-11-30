@@ -54,23 +54,17 @@ namespace _2._3.Shooter
                 if (Engine.IsPixelTransparent(click, this))
                     return;
 
-                // verificam daca este headshot
+                int damageValue = 20;
+                Color damageColor = Color.White;
                 if (IsHeadShot(click))
                 {
-                    health -= 50;
-                    Engine.graphics.DrawString("50", new Font("Arial", 12, FontStyle.Bold),
-                        new SolidBrush(Color.Red), click.X, click.Y - 20);
+                    damageValue = 50;
+                    damageColor = Color.Red;
                 }
-                else
-                {
-                    // viata scade cu 20
-                    health -= 20;
 
-                    // si afisam scrisul cu damage-ul primit chiar deasupra clickului dat
-                    Engine.graphics.DrawString("20", new Font("Arial", 12, FontStyle.Bold),
-                        new SolidBrush(Color.White), click.X, click.Y - 20);
-                }
-                Engine.form.pictureBox1.Image = Engine.bitmap;
+                health -= damageValue;
+                Engine.damages.Add(new DamageNumber(damageValue, new Point(click.X, click.Y - 20), damageColor));
+                Engine.UpdateDisplay();
             }
         }
     }

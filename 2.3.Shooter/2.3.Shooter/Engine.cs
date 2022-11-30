@@ -11,10 +11,12 @@ namespace _2._3.Shooter
     {
         public static Form1 form;
         public static Random random = new Random();
-        public static List<Enemy> enemies = new List<Enemy>(), currentWave = new List<Enemy>();
-        public static List<List<Enemy>> waves = new List<List<Enemy>>();
         public static Graphics graphics, healthBarGraphics;
         public static Bitmap bitmap, healthBarBitmap;
+
+        public static List<Enemy> enemies = new List<Enemy>(), currentWave = new List<Enemy>();
+        public static List<List<Enemy>> waves = new List<List<Enemy>>();
+        public static List<DamageNumber> damages = new List<DamageNumber>();
 
         public static int horizon = 200, wave = 1;
         public static double fortHealth = 100, time = 0;
@@ -114,6 +116,9 @@ namespace _2._3.Shooter
             foreach (Enemy enemy in enemies)
                 enemy.Draw();
 
+            foreach (var damageNumber in damages)
+                damageNumber.Draw();
+
             form.pictureBox1.Image = bitmap;
         }
 
@@ -178,6 +183,16 @@ namespace _2._3.Shooter
                     DrawGradient();
                     form.HealthLabel.Text = $" {fortHealth}/100";
                     enemies.Remove(enemies[i]);
+                    i--;
+                }
+            }
+
+            for (int i = 0; i < damages.Count; i++)
+            {
+                damages[i].timeLeft--;
+                if (damages[i].timeLeft <= 0)
+                {
+                    damages.RemoveAt(i);
                     i--;
                 }
             }
