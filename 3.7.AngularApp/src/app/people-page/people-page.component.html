@@ -1,0 +1,20 @@
+<div class="container">
+    <table class="table table-dark table-striped table-hover">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Nickname</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let person of people">
+                <td>{{person.firstName}}</td>
+                <td>{{person.lastName}}</td>
+                <td>{{person.nickName}}</td>
+                <td><a routerLink="person/{{person.id}}">Link</a></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
