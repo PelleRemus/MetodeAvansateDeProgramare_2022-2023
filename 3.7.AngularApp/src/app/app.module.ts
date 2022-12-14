@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -6,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { PeoplePageComponent } from './people-page/people-page.component';
 import { PersonEmailsComponent } from './person-emails/person-emails.component';
+import { PeopleService } from './services/people.service';
 
 @NgModule({
   declarations: [
@@ -16,9 +18,12 @@ import { PersonEmailsComponent } from './person-emails/person-emails.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [
+    PeopleService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

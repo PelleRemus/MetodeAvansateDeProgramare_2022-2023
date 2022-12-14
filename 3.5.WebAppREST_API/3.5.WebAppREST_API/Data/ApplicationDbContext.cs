@@ -23,6 +23,10 @@ namespace _3._5.WebAppREST_API.Data
                 .HasOne(e => e.From)
                 .WithMany(p => p.SentEmails);
 
+            modelBuilder.Entity<Person>()
+                .Property(p => p.Id)
+                .ValueGeneratedOnAdd();
+
             /*modelBuilder.Entity<Email>()
                 .HasMany(e => e.To)
                 .WithMany(p => p.InboxEmails)

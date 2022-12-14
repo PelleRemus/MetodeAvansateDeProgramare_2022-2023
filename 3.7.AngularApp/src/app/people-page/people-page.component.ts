@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Person } from '../models/person';
+import { PeopleService } from '../services/people.service';
 
 @Component({
   selector: 'app-people-page',
@@ -8,9 +9,11 @@ import { Person } from '../models/person';
 })
 export class PeoplePageComponent {
 
-  people: Array<Person> = [
-    { id: 1, firstName: "Remus-Nicolae", lastName: "Pelle", nickName: "Nicholas" } as Person,
-    { id: 2, firstName: "Norbert", lastName: "Bardas", nickName: "Norbi" } as Person,
-    { id: 3, firstName: "Marcela", lastName: "Popa-Bota", nickName: "Marci" } as Person,
-  ];
+  people: Person[] = [];
+
+  constructor(private peopleService: PeopleService) {
+    peopleService.getPeople().subscribe(res => {
+      this.people = res;
+    })
+  }
 }
